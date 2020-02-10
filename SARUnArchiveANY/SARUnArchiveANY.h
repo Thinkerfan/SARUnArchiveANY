@@ -33,6 +33,9 @@ typedef void(^Failure)();
 @property (nonatomic, copy) Completion completionBlock;
 @property (nonatomic, copy) Failure failureBlock;
 
+@property (nonatomic, copy) BOOL hasTempSubDir;
+
+
 - (id)initWithPath:(NSString *)path;
 - (void)decompress;
 

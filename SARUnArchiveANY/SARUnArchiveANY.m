@@ -16,6 +16,8 @@
 @implementation SARUnArchiveANY
 @synthesize completionBlock;
 @synthesize failureBlock;
+@synthesize hasTempSubDir;
+
 
 
 #pragma mark - Init Methods
@@ -23,6 +25,7 @@
 	if ((self = [super init])) {
 		_filePath = [path copy];
         _fileType = [[NSString alloc]init];
+        _hasTempSubDir = YES;
 	}
 
     if (_filePath != nil) {
@@ -36,6 +39,8 @@
         _filePath = [path copy];
         _password = [password copy];
         _fileType = [[NSString alloc]init];
+        _hasTempSubDir = YES;
+
     }
     
     if (_filePath != nil) {
@@ -68,9 +73,11 @@
 }
 
 - (void)rarDecompress {
-    NSString *tmpDirname = @"Extract rar";
-    _destinationPath = [_destinationPath stringByAppendingPathComponent:tmpDirname];
-//    _filePath = [[NSBundle mainBundle] pathForResource:@"example" ofType:@"rar"];
+    if (hasTempSubDir){
+        NSString *tmpDirname = @"Extract rar";
+        _destinationPath = [_destinationPath stringByAppendingPathComponent:tmpDirname];
+    //    _filePath = [[NSBundle mainBundle] pathForResource:@"example" ofType:@"rar"];
+    }
     NSLog(@"filePath : %@",_filePath);
     NSLog(@"destinationPath : %@",_destinationPath);
 
@@ -123,8 +130,10 @@
 }
 
 - (void)zipDecompress{
-    NSString *tmpDirname = @"Extract zip";
-    _destinationPath = [_destinationPath stringByAppendingPathComponent:tmpDirname];
+    if (hasTempSubDir){
+        NSString *tmpDirname = @"Extract zip";
+        _destinationPath = [_destinationPath stringByAppendingPathComponent:tmpDirname];
+    }
     BOOL unzipped = [SSZipArchive unzipFileAtPath:_filePath toDestination:_destinationPath delegate:self];
 //    NSLog(@"unzipped : %d",unzipped);
     NSError *error;
@@ -139,8 +148,10 @@
 }
 
 - (void)decompress7z{
-    NSString *tmpDirname = @"Extract 7z";    
-    _destinationPath = [_destinationPath stringByAppendingPathComponent:tmpDirname];
+    if (hasTempSubDir){
+        NSString *tmpDirname = @"Extract 7z";    
+        _destinationPath = [_destinationPath stringByAppendingPathComponent:tmpDirname];
+    }
     NSLog(@"_filePath: %@", _filePath);
     NSLog(@"_destinationPath: %@", _destinationPath);
     
