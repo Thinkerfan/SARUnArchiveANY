@@ -218,9 +218,15 @@
 
 #pragma mark - SSZipArchive Delegates
 - (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath{
-//        NSLog(@"path : %@",path);
-    //    NSLog(@"unzippedPath : %@",unzippedPath);
-    completionBlock(unzippedPath);
+//    NSLog(@"path : %@",path);
+//    NSLog(@"unzippedPath : %@",unzippedPath);
+//    NSArray * arr = [[[NSFileManager alloc] init] subpathsAtPath:unzippedPath];
+//    for( NSString * file in arr ){
+//        NSLog(@"%@",file);
+//    }
+//
+//
+    completionBlock(arr);
 }
 
 - (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath WithFilePaths:(NSMutableArray *)filePaths{
