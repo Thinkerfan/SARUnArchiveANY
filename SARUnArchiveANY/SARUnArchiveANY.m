@@ -16,22 +16,21 @@
 @implementation SARUnArchiveANY
 @synthesize completionBlock;
 @synthesize failureBlock;
-@synthesize hasTempSubDir;
 
 
 
 #pragma mark - Init Methods
 - (id)initWithPath:(NSString *)path {
-	if ((self = [super init])) {
-		_filePath = [path copy];
+    if ((self = [super init])) {
+        _filePath = [path copy];
         _fileType = [[NSString alloc]init];
         _hasTempSubDir = YES;
-	}
+    }
 
     if (_filePath != nil) {
         _destinationPath = [self getDestinationPath];
     }
-	return self;
+    return self;
 }
 
 - (id)initWithPath:(NSString *)path andPassword:(NSString*)password{
@@ -73,7 +72,7 @@
 }
 
 - (void)rarDecompress {
-    if (hasTempSubDir){
+    if (_hasTempSubDir){
         NSString *tmpDirname = @"Extract rar";
         _destinationPath = [_destinationPath stringByAppendingPathComponent:tmpDirname];
     //    _filePath = [[NSBundle mainBundle] pathForResource:@"example" ofType:@"rar"];
@@ -130,7 +129,7 @@
 }
 
 - (void)zipDecompress{
-    if (hasTempSubDir){
+    if (_hasTempSubDir){
         NSString *tmpDirname = @"Extract zip";
         _destinationPath = [_destinationPath stringByAppendingPathComponent:tmpDirname];
     }
@@ -148,8 +147,8 @@
 }
 
 - (void)decompress7z{
-    if (hasTempSubDir){
-        NSString *tmpDirname = @"Extract 7z";    
+    if (_hasTempSubDir){
+        NSString *tmpDirname = @"Extract 7z";
         _destinationPath = [_destinationPath stringByAppendingPathComponent:tmpDirname];
     }
     NSLog(@"_filePath: %@", _filePath);
