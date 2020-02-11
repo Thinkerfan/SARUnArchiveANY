@@ -220,13 +220,16 @@
 - (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath{
 //    NSLog(@"path : %@",path);
 //    NSLog(@"unzippedPath : %@",unzippedPath);
-//    NSArray * arr = [[[NSFileManager alloc] init] subpathsAtPath:unzippedPath];
-//    for( NSString * file in arr ){
-//        NSLog(@"%@",file);
-//    }
+    NSMutableArray *filePathsArray = [NSMutableArray array];
+    NSArray * arr = [[[NSFileManager alloc] init] subpathsAtPath:unzippedPath];
+    for( NSString * file in arr ){
+        NSString * filepath = [NSString stringWithFormat:@"%@/%@",unzippedPath,file];
+        [filePathsArray addObject:filepath];
+//        NSLog(@"%@,%@",file,filepath);
+    }
 //
 //
-    completionBlock(arr);
+    completionBlock(filePathsArray);
 }
 
 - (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath WithFilePaths:(NSMutableArray *)filePaths{
