@@ -220,15 +220,20 @@
 - (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath{
 //    NSLog(@"path : %@",path);
 //    NSLog(@"unzippedPath : %@",unzippedPath);
+    NSFileManager * fm = [NSFileManager  defaultManager];
     NSMutableArray *filePathsArray = [NSMutableArray array];
-    NSArray * arr = [[[NSFileManager alloc] init] subpathsAtPath:unzippedPath];
+    NSArray * arr = [fm subpathsAtPath:unzippedPath];
     for( NSString * file in arr ){
-        NSString * filepath = [NSString stringWithFormat:@"%@/%@",unzippedPath,file];
-        [filePathsArray addObject:filepath];
+        if(![file containsString:@"MACOSX"]){
+            NSString * filepath = [NSString stringWithFormat:@"%@/%@",unzippedPath,file];
+            BOOL isDir;
+            [fm fileExistsAtPath:filepath isDirectory:&isDir];
+            if (!isDir){
+                [filePathsArray addObject:filepath];
+            }
+        }
 //        NSLog(@"%@,%@",file,filepath);
     }
-//
-//
     completionBlock(filePathsArray);
 }
 
